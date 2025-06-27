@@ -1,0 +1,77 @@
+# Emotet Adversary Emulation – Advanced Incident Response Project
+
+## Overview
+
+This repository contains the implementation of Task 2 of the Advanced Incident Response (AIR) Repeat 2025 project. 
+The objective was to simulate two MITRE ATT&CK techniques commonly used by the Emotet malware family, 
+within a virtual lab environment using Windows 10 and PowerShell.
+
+## Author
+Carlos Quintal  
+Date: 26/06/2025
+
+---
+
+## Simulated Techniques
+
+1. **T1053.005 – Scheduled Task / Job: Scheduled Task**
+   - Simulated persistence using a scheduled task named `OfficeUpdate` that runs a harmless payload (Notepad).
+   - [MITRE Technique Info](https://attack.mitre.org/techniques/T1053/005/)
+
+2. **T1059.001 – Command and Scripting Interpreter: PowerShell**
+   - Simulated script execution via PowerShell to mimic malicious behavior (launching Notepad).
+   - [MITRE Technique Info](https://attack.mitre.org/techniques/T1059/001/)
+
+---
+
+## Tools Used
+
+- Windows 10 VM (VirtualBox)
+- PowerShell scripting
+- Sysmon for Windows (log generation)
+- Windows Task Scheduler
+- Microsoft Word for documentation
+- Snipping Tool for screenshots
+
+---
+
+## Repository Structure
+
+```
+📁 Emotet-Adversary-Emulation/
+│
+├── README.md
+├── scripts/
+│   └── payload.ps1
+│   └── schedule_task.ps1
+│
+├── screenshots/
+│   └── payload_script.png
+│   └── create_task_cmd.png
+│   └── task_scheduler_view.png
+│   └── sysmon_ttp1.png
+│   └── sysmon_ttp2.png
+│
+├── report/
+│   └── Emotet_Task_2_Report_FINAL_Revised_CarlosQuintal.docx
+│
+└── slides/
+    └── Emotet_Presentation_FINAL.pptx
+```
+
+---
+
+## How to Run
+
+- Open PowerShell as administrator on Windows 10.
+- To create the task:
+  ```powershell
+  Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File C:\MalwareSim\payload.ps1") -Trigger (New-ScheduledTaskTrigger -AtLogOn) -TaskName "OfficeUpdate" -Description "Emotet Simulation" -User "CurrentUser" -RunLevel Highest
+  ```
+- The script (`payload.ps1`) simply runs Notepad for demonstration.
+
+---
+
+## License
+This repository is intended for educational purposes only.
+
